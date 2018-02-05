@@ -1,0 +1,37 @@
+{
+  "name": "bootnode",
+  "version": "1.0.0",
+  "description": "A standard bootstrap 4 theme development workflow: following community suggested best practices using sass, npm, gulp, gulp plugins",
+  "main": "index.html",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekram-syed/bootnode.git"
+  },
+  "keywords": [
+    "bootstrap",
+    "sass",
+    "gulp",
+    "browser-sync"
+  ],
+  "author": "Syed Ekram Uddin Emon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ekram-syed/bootnode/issues"
+  },
+  "homepage": "https://github.com/ekram-syed/bootnode#readme",
+  "devDependencies": {
+    "browser-sync": "^2.23.6",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0"
+  }
+}
