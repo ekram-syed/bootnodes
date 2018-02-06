@@ -24,7 +24,7 @@ gulp.task('sass', function() {
         .pipe(sourcemaps.init())
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(postcss([ autoprefixer()]))
-        .pipe(concat('main.css'))
+        .pipe(concat('main.min.css'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.publish + "/css"))
         .pipe(browserSync.stream());
@@ -38,11 +38,24 @@ gulp.task('js', function () {
         'src/js/**/*.js'
     ])
     .pipe(sourcemaps.init())
-    .pipe(concat('main.js'))
+    .pipe(concat('main.min.js'))
     .pipe(uglify())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.publish + '/js'))
     .pipe(browserSync.stream());
 });
 
-gulp.task('default', ['template','sass', 'js']);
+// Serve and monitor
+gulp.task('watch', ['sass', 'js'], function() {
+
+    browserSync.init({
+        server: './'+paths.publish
+    });
+
+    gulp.watch('src/scss/**/*.scss', ['sass']);
+    gulp.watch('src/js/*.js', ['js']);
+    //gulp.watch('src/images/*', ['imagemin']);
+    gulp.watch(paths.publish+'/**/*.html').on('change', browserSync.reload);
+});
+
+gulp.task('default', ['template','sass', 'js', 'watch']);
