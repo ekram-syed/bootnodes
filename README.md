@@ -15,11 +15,11 @@ npm install gulp -g
 npm install
 npm start
 ```
-After seccessfull completed all process, your output directory will be ready, your browser will fire with the bootstrap starter template and will be watching for your modification.   
+After successful completion of all process; your output directory will be ready; your browser will fire with the bootstrap starter template and will be watching for your modification.   
 
 ## Authors
 
-* **ekram-syed** - *Initial work* - [JeremyPercy](https://github.com/ekram-syed)
+* **ekram-syed** - *Initial work* - (https://github.com/ekram-syed)
 
 ## License
 
