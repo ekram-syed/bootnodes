@@ -11,10 +11,10 @@ var paths = {
   publish: 'dist'
 }
 
-// Copy Starter template
+// Copy Starter template TODO: only if not available
 gulp.task('template', function() {
-    return gulp.src(['src/index.html'])
-        .pipe(gulp.dest("dist/"))
+    return gulp.src(['src/*.html'])
+        .pipe(gulp.dest(paths.publish))
         .pipe(browserSync.stream());
 });
 
@@ -33,7 +33,7 @@ gulp.task('sass', function() {
 // Process JS files
 gulp.task('js', function () {
     return gulp.src([
-        'node_modules/jquery/jquery.js',
+        'node_modules/jquery/dist/jquery.js',
         'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
         'src/js/**/*.js'
     ])
@@ -58,4 +58,4 @@ gulp.task('watch', ['sass', 'js'], function() {
     gulp.watch(paths.publish+'/**/*.html').on('change', browserSync.reload);
 });
 
-gulp.task('default', ['template','sass', 'js', 'watch']);
+gulp.task('default', ['template','sass', 'js', 'template' ,'watch']);
