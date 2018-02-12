@@ -22,7 +22,7 @@ node -v
 ```
 npm install gulp -g
 ```
-- Download this repository as zip to your directory.
+- Download this repository as zip to your project directory.
 - Open terminal / commander in your project directory, the run
 ```
 npm install
