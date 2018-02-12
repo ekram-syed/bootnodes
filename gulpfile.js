@@ -54,7 +54,7 @@ gulp.task('watch', ['sass', 'js'], function() {
 
     gulp.watch('src/scss/**/*.scss', ['sass']);
     gulp.watch('src/js/*.js', ['js']);
-    //gulp.watch('src/images/*', ['imagemin']);
+    gulp.watch('src/*.html', ['template']);
     gulp.watch(paths.publish+'/**/*.html').on('change', browserSync.reload);
 });
 
