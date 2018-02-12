@@ -1,20 +1,36 @@
-var gulp        = require('gulp'),
-    browserSync = require('browser-sync').create(),
-    sass        = require('gulp-sass'),
-    autoprefixer = require('autoprefixer'),
-    sourcemaps = require('gulp-sourcemaps'),
-    postcss = require('gulp-postcss'),
-    uglify = require('gulp-uglify'),
-    concat = require('gulp-concat');
+// Resource libs
+var gulp         = require('gulp'),                  // https://www.npmjs.com/package/gulp
+    browserSync  = require('browser-sync').create(), // https://www.npmjs.com/package/browser-sync
+    sass         = require('gulp-sass'),             // https://www.npmjs.com/package/gulp-sass
+    autoprefixer = require('autoprefixer'),          // https://www.npmjs.com/package/autoprefixer
+    sourcemaps   = require('gulp-sourcemaps'),       // https://www.npmjs.com/package/gulp-sourcemaps
+    postcss      = require('gulp-postcss'),          // https://www.npmjs.com/package/gulp-postcss
+    uglify       = require('gulp-uglify'),           // https://www.npmjs.com/package/gulp-uglify
+    imagemin     = require('gulp-imagemin'),         // https://www.npmjs.com/package/gulp-imagemin
+    htmlmin      = require('gulp-html-minifier'),    // https://www.npmjs.com/package/gulp-html-minifier
+    concat       = require('gulp-concat');           // https://www.npmjs.com/package/gulp-concat
 
+// All paths names, Change according to your needs   
 var paths = {
-  publish: 'dist'
+  publishRoot : 'dist', 
+  imgDir      : 'img',
+  cssDir      : 'css',
+  jsDir       : 'js'
 }
 
-// Copy Starter template TODO: only if not available
+// Copy .html templates
 gulp.task('template', function() {
-    return gulp.src(['src/*.html'])
-        .pipe(gulp.dest(paths.publish))
+    return gulp.src(['src/**/*.html'])
+        //.pipe(htmlmin({collapseWhitespace: true, removeComments: true})) // minify html
+        .pipe(gulp.dest(paths.publishRoot))        
+        .pipe(browserSync.stream()); // browser-sync
+});
+
+// Copy assets
+gulp.task('asset', function () {
+    return gulp.src('src/img/*')
+        .pipe(imagemin()) // compress images
+        .pipe(gulp.dest(paths.publishRoot+'/img'))
         .pipe(browserSync.stream());
 });
 
@@ -26,7 +42,7 @@ gulp.task('sass', function() {
         .pipe(postcss([ autoprefixer()]))
         .pipe(concat('main.min.css'))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(paths.publish + "/css"))
+        .pipe(gulp.dest(paths.publishRoot + "/" + paths.cssDir))
         .pipe(browserSync.stream());
 });
 
@@ -41,7 +57,7 @@ gulp.task('js', function () {
     .pipe(concat('main.min.js'))
     .pipe(uglify())
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(paths.publish + '/js'))
+    .pipe(gulp.dest(paths.publishRoot + '/js'))
     .pipe(browserSync.stream());
 });
 
@@ -49,13 +65,14 @@ gulp.task('js', function () {
 gulp.task('watch', ['sass', 'js'], function() {
 
     browserSync.init({
-        server: './'+paths.publish
+        server: './'+paths.publishRoot
     });
 
     gulp.watch('src/scss/**/*.scss', ['sass']);
     gulp.watch('src/js/*.js', ['js']);
     gulp.watch('src/*.html', ['template']);
-    gulp.watch(paths.publish+'/**/*.html').on('change', browserSync.reload);
+    gulp.watch('src/img/*', ['asset'])
+    //gulp.watch(paths.publishRoot+'/**/*.html').on('change', browserSync.reload);
 });
 
-gulp.task('default', ['template','sass', 'js', 'template' ,'watch']);
+gulp.task('default', ['sass', 'js', 'asset', 'template', 'watch']);
